@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { create } from 'zustand';
 
 import { devtools, persist } from 'zustand/middleware';
@@ -5,7 +6,7 @@ import { devtools, persist } from 'zustand/middleware';
 interface Bucket {
   id: string;
   fruits: string[];
-  size: number;
+  maxSize: number;
 }
 
 interface Fruit {
@@ -18,6 +19,7 @@ interface Fruit {
 interface State {
   buckets: Bucket[];
   fruits: Fruit[];
+  addBucket: (maxSize: number) => void;
 }
 
 const useStore = create<State>()(
@@ -25,10 +27,21 @@ const useStore = create<State>()(
     persist(
       (set) => ({
         buckets: [],
-        fruits: []
+        fruits: [],
+        addBucket: (maxSize) => set(({ buckets}) => ({
+          buckets: [
+            ...buckets,
+            {
+              id: nanoid(),
+              fruits: [],
+              maxSize
+            }
+          ]
+        })),
       }),
       {
         name: 'varejao-storage',
+        skipHydration: true,
       }
     )
   )
