@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider>{children}</SnackbarProvider>
+          <SnackbarProvider anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>{children}</SnackbarProvider>
         </ThemeProvider>
       </body>
     </html>

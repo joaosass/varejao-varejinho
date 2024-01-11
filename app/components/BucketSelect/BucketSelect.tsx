@@ -21,7 +21,10 @@ export default function BucketSelect({ anchorElement, handleClose, handleSelect 
       }}
     >
       {buckets.map(({ id }, index) =>
-        <MenuItem key={id} onClick={() => handleSelect(id)}>Balde {index}</MenuItem>
+        <MenuItem key={`bucket-option-${id}-${index}`} onClick={() => {
+          handleSelect(id);
+          handleClose();
+        }}>Balde {index}</MenuItem>
       )}
     </Popover>
   )

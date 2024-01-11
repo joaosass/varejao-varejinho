@@ -4,9 +4,15 @@ import { useSnackbar } from 'notistack';
 
 import type { Fruit } from '../../store';
 import useStore from '../../store';
+import { FruitCardProps } from './FruitCard';
 
-export default function useFruitActions({ id }: Pick<Fruit, 'id'>) {
-  const { buckets, putFruitInBucket, removeFruit } = useStore();
+export default function useFruitActions({
+  bucketId,
+  fruitIndex,
+  id,
+  isInBucket
+}: Pick<Fruit, 'id'> & FruitCardProps) {
+  const { buckets, putFruitInBucket, removeFruit, removeFruitFromBucket } = useStore();
   const { enqueueSnackbar } = useSnackbar();
 
   const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
@@ -19,6 +25,9 @@ export default function useFruitActions({ id }: Pick<Fruit, 'id'>) {
 
   const handlePutInBucketSuccess = () =>
     enqueueSnackbar('Fruta adicionada com sucesso!', { variant: 'success' });
+
+  const handleRemoveFromBucketSuccess = () =>
+    enqueueSnackbar('Fruta removida com sucesso!', { variant: 'success' });
 
   const handleDelete = () => {
     const shouldntDeleteFruit = buckets.some(({ fruits }) => fruits.includes(id));
@@ -44,11 +53,16 @@ export default function useFruitActions({ id }: Pick<Fruit, 'id'>) {
     handlePutInBucketSuccess();
   }
 
+  const handleRemoveFruitFromBucket = () => {
+    removeFruitFromBucket(fruitIndex || 0, bucketId || '');
+    handleRemoveFromBucketSuccess();
+  }
+
   return  {
     anchorElement,
     handleClosePopover,
     handleOpenPopover,
-    removeFruit: handleDelete,
+    removeFruit: isInBucket ? handleRemoveFruitFromBucket : handleDelete,
     putFruitInBucket: handlePutFruitInBucket,
   }
 }

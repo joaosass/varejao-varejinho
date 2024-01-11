@@ -13,7 +13,7 @@ export default function FruitList() {
 
   return (
     <Stack direction="row" gap={2}>
-      {fruits.map(({id, ...fruit}) => <FruitCard key={id} id={id} {...fruit} />)}
+      {fruits.map(({id, ...fruit}, index) => <FruitCard key={`fruit-${id}-${index}`} id={id} {...fruit} />)}
     </Stack>
   )
 }

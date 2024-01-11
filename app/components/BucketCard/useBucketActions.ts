@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 
 import type { Bucket } from '../../store';
@@ -8,11 +9,10 @@ export default function useBucketActions({ fruits, id, maxSize }: Bucket) {
   const { fruits: fruitList, removeBucket } = useStore();
   const { enqueueSnackbar } = useSnackbar();
 
-  console.log(fruits);
-  console.log(maxSize);
-
   const usedCapacityPercentage = fruits.length ? `${((fruits.length * 100) / maxSize).toFixed(1)}%`: '0%';
-  const currentFruits = fruits.map((fruitId) => fruitList.find(({ id }) => id === fruitId));
+  const currentFruits = useMemo(() =>
+    fruits.map((fruitId) => fruitList.find(({ id }) => id === fruitId)),
+  [fruits, fruitList]);
   const fruitsTotalValue = convertNumberToCurrencyString(currentFruits.reduce((acc, currentValue) => (currentValue?.price || 0) + acc, 0))
 
   const handleErrorCallback = () => 

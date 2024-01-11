@@ -7,14 +7,27 @@ import { convertNumberToCurrencyString } from '../../utils/currency';
 import useFruitActions from './useFruitActions';
 import BucketSelect from '../BucketSelect';
 
-export default function FruitCard({ id, isInBucket, name, price }: Fruit & { isInBucket: boolean }) {
+export interface FruitCardProps {
+  bucketId?: string;
+  isInBucket?: boolean;
+  fruitIndex?: number;
+}
+
+export default function FruitCard({
+  bucketId,
+  id,
+  fruitIndex,
+  isInBucket,
+  name,
+  price
+}: Fruit & FruitCardProps) {
   const {
     anchorElement,
     handleClosePopover,
     handleOpenPopover,
     putFruitInBucket,
-    removeFruit
-  } = useFruitActions({ id });
+    removeFruit,
+  } = useFruitActions({ bucketId, fruitIndex, id, isInBucket });
 
   return (
     <Stack width={isInBucket ? '100%' : 250}>
@@ -32,7 +45,12 @@ export default function FruitCard({ id, isInBucket, name, price }: Fruit & { isI
             {isInBucket ? null : <IconButton onClick={handleOpenPopover} sx={(theme) => ({ color: theme.palette.common.white })}>
               <AddBoxIcon color="inherit" />
             </IconButton>}
-            <IconButton sx={(theme) => ({ color: isInBucket ? theme.palette.common.black : theme.palette.common.white })} onClick={removeFruit}>
+            <IconButton
+              sx={(theme) => ({
+                color: isInBucket ? theme.palette.common.black : theme.palette.common.white
+              })}
+              onClick={removeFruit}
+            >
               <DeleteIcon color="inherit" />
             </IconButton>
           </Stack>
