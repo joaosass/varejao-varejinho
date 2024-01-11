@@ -1,31 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
-import useStore from '../../store';
+import { convertCurrencyStringToNumber, convertNumberToCurrencyString } from '../../utils/currency';
 import Form from '../Form';
 
-import schema, { FruitFormSchema } from './schema';
-import { convertCurrencyStringToNumber, convertNumberToCurrencyString } from '@/app/utils/currency';
+import useFruit from './useFruit';
 
 export default function BucketForm() {
-  const { addFruit } = useStore();
-  const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<FruitFormSchema>({
-    defaultValues: {
-      name: '',
-      price: '',
-    },
-    resolver: yupResolver(schema),
-    mode: 'onBlur',
-  })
-
-  const saveFruit = ({ name, price }: FruitFormSchema) => {
-    addFruit(name, convertCurrencyStringToNumber(price));
-    reset({ name: '', price: '' });
-  }
+  const { control, errors, handleSubmit, isValid } = useFruit();
 
   return (
-    <Form isValid={isValid} title="Criar Fruta" onClick={handleSubmit(saveFruit)}>
+    <Form isValid={isValid} title="Criar Fruta" onClick={handleSubmit}>
       <Controller
         control={control}
         name="name"
