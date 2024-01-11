@@ -19,6 +19,7 @@ interface State {
   fruits: Fruit[];
   addBucket: (maxSize: number) => void;
   addFruit: (name: string, price: number) => void;
+  putFruitInBucket: (fruitId: string, bucketId: string) => void;
   removeBucket: (id: string) => void;
   removeFruit: (id: string) => void;
 }
@@ -48,6 +49,14 @@ const useStore = create<State>()(
               price
             }
           ]
+        })),
+        putFruitInBucket: (fruitId, bucketId) => set(({ buckets }) => ({
+          buckets: buckets.map(({ id, fruits, maxSize }) => {
+            if (id === bucketId) {
+              return { id, maxSize, fruits: [...fruits, fruitId] }
+            }
+            return { id, fruits, maxSize}
+          })
         })),
         removeBucket: (id) => set(({ buckets }) => ({
           buckets: buckets.filter((bucket) => bucket.id !== id)

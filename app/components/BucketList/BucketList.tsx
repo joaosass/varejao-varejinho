@@ -14,7 +14,7 @@ export default function BucketList() {
   return (
     <Card>
       <Stack direction="row" gap={2} flexWrap="wrap" p={3}>
-        {buckets.map(({ id, ...bucket }) => <BucketCard key={id} id={id} {...bucket} />)}
+        {buckets.map(({ id, ...bucket }, index) => <BucketCard key={id} bucketIndex={index} id={id} {...bucket} />)}
       </Stack>
     </Card>
   )
