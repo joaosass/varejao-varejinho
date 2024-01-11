@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
 import { create } from 'zustand';
-
 import { devtools, persist } from 'zustand/middleware';
 
 export interface Bucket {
@@ -14,7 +13,6 @@ export interface Fruit {
   name: string;
   price: number;
 }
-
 
 interface State {
   buckets: Bucket[];
@@ -50,11 +48,9 @@ const useStore = create<State>()(
             }
           ]
         })),
-        removeFruit: (id) => set(({ buckets, fruits }) => ({
-          fruits: buckets.some(({ fruits }) => fruits.includes(id)) ?
-            fruits :
-            fruits.filter((fruit) => fruit.id !== id)
-          }))
+        removeFruit: (id) => set(({ fruits }) => ({
+          fruits: fruits.filter((fruit) => fruit.id !== id)
+        }))
       }),
       {
         name: 'varejao-storage',

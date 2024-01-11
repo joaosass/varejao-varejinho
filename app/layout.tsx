@@ -7,6 +7,7 @@ import '@fontsource/roboto/700.css';
 import './globals.css'
 
 import { ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 import theme from './theme';
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </body>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider>{children}</SnackbarProvider>
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

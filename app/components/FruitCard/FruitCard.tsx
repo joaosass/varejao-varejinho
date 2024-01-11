@@ -3,11 +3,11 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import type { Fruit } from '../../store';
-import useStore from '../../store';
 import { convertNumberToCurrencyString } from '../../utils/currency';
+import useFruitActions from './useFruitAction';
 
 export default function FruitCard({ id, name, price }: Fruit) {
-  const { removeFruit } = useStore()
+  const { removeFruit } = useFruitActions({ id });
 
   return (
     <Stack width={250}>
@@ -22,7 +22,7 @@ export default function FruitCard({ id, name, price }: Fruit) {
             <IconButton sx={(theme) => ({ color: theme.palette.common.white })}>
               <AddBoxIcon color="inherit" />
             </IconButton>
-            <IconButton sx={(theme) => ({ color: theme.palette.common.white })} onClick={() => removeFruit(id)}>
+            <IconButton sx={(theme) => ({ color: theme.palette.common.white })} onClick={removeFruit}>
               <DeleteIcon color="inherit" />
             </IconButton>
           </Stack>
