@@ -19,6 +19,7 @@ interface State {
   fruits: Fruit[];
   addBucket: (maxSize: number) => void;
   addFruit: (name: string, price: number) => void;
+  removeBucket: (id: string) => void;
   removeFruit: (id: string) => void;
 }
 
@@ -48,9 +49,12 @@ const useStore = create<State>()(
             }
           ]
         })),
+        removeBucket: (id) => set(({ buckets }) => ({
+          buckets: buckets.filter((bucket) => bucket.id !== id)
+        })),
         removeFruit: (id) => set(({ fruits }) => ({
           fruits: fruits.filter((fruit) => fruit.id !== id)
-        }))
+        })),
       }),
       {
         name: 'varejao-storage',

@@ -4,14 +4,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import type { Fruit } from '../../store';
 import { convertNumberToCurrencyString } from '../../utils/currency';
-import useFruitActions from './useFruitAction';
+import useFruitActions from './useFruitActions';
 
-export default function FruitCard({ id, name, price }: Fruit) {
+export default function FruitCard({ id, isInBucket, name, price }: Fruit & { isInBucket: boolean}) {
   const { removeFruit } = useFruitActions({ id });
 
   return (
     <Stack width={250}>
-      <Card sx={(theme) => ({ background: theme.palette.primary.main, color: theme.palette.common.white })}>
+      <Card sx={(theme) => ({
+        background: isInBucket? theme.palette.common.white : theme.palette.primary.main,
+        color: isInBucket ? 'inherit' : theme.palette.common.white
+      })}>
         <Stack alignItems="center" direction="row" gap={1} p={2} pr={1}>
           <Stack flexGrow={1}>
             <Typography>{name}</Typography>
@@ -19,9 +22,9 @@ export default function FruitCard({ id, name, price }: Fruit) {
           </Stack>
           <Divider flexItem orientation="vertical" variant="middle" />
           <Stack direction="row">
-            <IconButton sx={(theme) => ({ color: theme.palette.common.white })}>
+            {isInBucket ? null : <IconButton sx={(theme) => ({ color: theme.palette.common.white })}>
               <AddBoxIcon color="inherit" />
-            </IconButton>
+            </IconButton>}
             <IconButton sx={(theme) => ({ color: theme.palette.common.white })} onClick={removeFruit}>
               <DeleteIcon color="inherit" />
             </IconButton>

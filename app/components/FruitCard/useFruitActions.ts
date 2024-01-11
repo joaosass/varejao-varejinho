@@ -11,9 +11,9 @@ export default function useFruitActions({ id }: Pick<Fruit, 'id'>) {
     enqueueSnackbar('Não é possível excluir uma fruta que está em um balde!', { variant: 'warning' });
 
   const handleDelete = () => {
-    const shouldDeleteFruit = buckets.some(({ fruits }) => fruits.includes(id));
+    const shouldntDeleteFruit = buckets.some(({ fruits }) => fruits.includes(id));
 
-    if (shouldDeleteFruit) {
+    if (shouldntDeleteFruit) {
       return handleErrorCallback();
     }
 

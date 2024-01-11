@@ -1,8 +1,8 @@
-import { Card } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 
 import useStore from '../../store';
-import { nanoid } from 'nanoid';
 import EmptyState from '../EmptyState';
+import BucketCard from '../BucketCard';
 
 export default function BucketList() {
   const { buckets } = useStore();
@@ -13,7 +13,9 @@ export default function BucketList() {
 
   return (
     <Card>
-      {buckets.map((_, index) => <div key={nanoid()}>{index}</div>)}
+      <Stack direction="row" gap={2} flexWrap="wrap" p={3}>
+        {buckets.map(({ id, ...bucket }) => <BucketCard key={id} id={id} {...bucket} />)}
+      </Stack>
     </Card>
   )
 }
