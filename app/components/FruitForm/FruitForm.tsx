@@ -10,7 +10,7 @@ import { convertCurrencyStringToNumber, convertNumberToCurrencyString } from '@/
 
 export default function BucketForm() {
   const { addFruit } = useStore();
-  const { control, handleSubmit, formState: { errors, isValid } } = useForm<FruitFormSchema>({
+  const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<FruitFormSchema>({
     defaultValues: {
       name: '',
       price: '',
@@ -21,6 +21,7 @@ export default function BucketForm() {
 
   const saveFruit = ({ name, price }: FruitFormSchema) => {
     addFruit(name, convertCurrencyStringToNumber(price));
+    reset({ name: '', price: '' });
   }
 
   return (

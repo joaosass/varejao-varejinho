@@ -9,16 +9,14 @@ import Form from '../Form';
 
 export default function BucketForm() {
   const { addBucket } = useStore();
-  const { control, handleSubmit, formState: { errors, isValid } } = useForm<BucketFormSchema>({
-    defaultValues: {
-      maxSize: undefined,
-    },
+  const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<BucketFormSchema>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
   })
 
   const saveBucket = ({ maxSize }: BucketFormSchema) => {
     addBucket(maxSize);
+    reset({ maxSize: 0 })
   }
 
   return (
