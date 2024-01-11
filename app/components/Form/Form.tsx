@@ -10,7 +10,7 @@ interface FormProps {
 
 export default function Form({ children, isValid, onClick, title }: FormProps) {
   return (
-    <Card sx={{ height: '100%' }} variant="outlined">
+    <Card sx={{ height: '100%' }}>
       <Stack py={3} px={4} gap={3}>
         <Typography variant="h5" fontWeight="bold">{title}</Typography>
         <Stack gap={2}>{children}</Stack>

@@ -11,7 +11,7 @@ export default function BucketForm() {
   const { addBucket } = useStore();
   const { control, handleSubmit, formState: { errors, isValid } } = useForm<BucketFormSchema>({
     defaultValues: {
-      maxSize: 0,
+      maxSize: undefined,
     },
     resolver: yupResolver(schema),
     mode: 'onBlur',
@@ -27,7 +27,7 @@ export default function BucketForm() {
         control={control}
         name="maxSize"
         render={({ field }) =>
-          <TextField error={Boolean(errors.maxSize?.message)} helperText={errors.maxSize?.message} {...field} />
+          <TextField error={Boolean(errors.maxSize?.message)} helperText={errors.maxSize?.message} label="Capacidade" {...field} />
         }
       />
     </Form>

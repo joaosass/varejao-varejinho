@@ -3,16 +3,16 @@ import { create } from 'zustand';
 
 import { devtools, persist } from 'zustand/middleware';
 
-interface Bucket {
+export interface Bucket {
   id: string;
   fruits: string[];
   maxSize: number;
 }
 
-interface Fruit {
+export interface Fruit {
   id: string;
   name: string;
-  number: number;
+  price: number;
 }
 
 
@@ -20,6 +20,8 @@ interface State {
   buckets: Bucket[];
   fruits: Fruit[];
   addBucket: (maxSize: number) => void;
+  addFruit: (name: string, price: number) => void;
+  removeFruit: (id: string) => void;
 }
 
 const useStore = create<State>()(
@@ -28,7 +30,7 @@ const useStore = create<State>()(
       (set) => ({
         buckets: [],
         fruits: [],
-        addBucket: (maxSize) => set(({ buckets}) => ({
+        addBucket: (maxSize) => set(({ buckets }) => ({
           buckets: [
             ...buckets,
             {
@@ -38,6 +40,21 @@ const useStore = create<State>()(
             }
           ]
         })),
+        addFruit: (name, price) => set(({ fruits }) => ({
+          fruits: [
+            ...fruits,
+            {
+              id: nanoid(),
+              name,
+              price
+            }
+          ]
+        })),
+        removeFruit: (id) => set(({ buckets, fruits }) => ({
+          fruits: buckets.some(({ fruits }) => fruits.includes(id)) ?
+            fruits :
+            fruits.filter((fruit) => fruit.id !== id)
+          }))
       }),
       {
         name: 'varejao-storage',

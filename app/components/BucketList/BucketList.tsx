@@ -3,7 +3,7 @@ import { Card } from '@mui/material';
 import useStore from '../../store';
 import { nanoid } from 'nanoid';
 
-export default function BucketForm() {
+export default function BucketList() {
   const { buckets } = useStore();
 
   return (

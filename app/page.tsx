@@ -7,6 +7,7 @@ import BucketList from './components/BucketList';
 import BucketForm from './components/BucketForm';
 import FruitForm from './components/FruitForm';
 import useStore from './store';
+import FruitList from './components/FruitList/FruitList';
 
 export default function Home() {
     useEffect(() => {
@@ -23,7 +24,7 @@ export default function Home() {
           <FruitForm />
         </Stack>
       </Stack>
-      <Stack></Stack>
+      <FruitList />
       <BucketList />
     </Stack>
   )

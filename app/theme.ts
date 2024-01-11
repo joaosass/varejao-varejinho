@@ -5,6 +5,7 @@ const theme = createTheme({
     primary: {
       main: '#3763FF',
     },
+    divider: '#fff',
     background: {
       paper: '#D1DBFF',
     },
